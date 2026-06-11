@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cadastro da Empresa</title>
+</head>
+<body class="bg-sky-950 h-screen items-center flex justify-center">
+<form id="submitForm" action="" class="flex gap-24" th:action="@{/company/create}"  method="post" th:object="${company}">
+
+    <div class="space-y-8 bg-zinc-900 roundend-md p-20">
+        <h2 class="text-white">Empresa, crie seu cadastro gratuitamente</h2>
+
+        <div class="flex flex-row gap-10">
+        <input type="text" name="username" id="username" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Usuario" th:field="*{username}">
+        <input type="text" name="name" id="name" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Digite seu nome" th:field="*{name}">
+        </div>
+        <div class="flex flex-row gap-10">
+        <input type="email" name="email" id="email" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="E-mail" th:field="*{email}">
+        <input type="text" name="website" id="website" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Digite seu Site" th:field="*{website}">
+        </div>
+        <div class="flex flex-row gap-10">
+        <input type="password" name="password" id="password" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Senha" th:field="*{password}">
+        <input type="password" name="confirmPassword" id="confirmPassword" class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Confirme sua senha">
+        </div>
+        <div class="flex flex-row gap-10">
+        <textarea name="description"  class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2" placeholder="Digite uma breve descrição sobre você" th:field="*{description}"></textarea>
+        </div>
+        <p class="text-red-400" th:if="${error_message}" th:text="${error_message}"></p>
+        <p class="text-red-400 hidden" id="password_error" >As senhas não conferem</p>
+
+        <button class="bg-green-700 w-full p-4 rounded text-white hover:bg-green-600">Cadastre-se</button>
+
+        <p class="mt-4 text-white">
+            Já tem uma conta? <a href="/company/login" class="text-center text-green-700  hover:text-green-600"> Faça login aqui</a>
+        </p>
+
+    </div>
+    <div class="text-white max-w-80 text-6xl flex items-center leading-tight">
+        Gestão de Vagas
+    </div>
+</form>
+</body>
+<script>
+    document.getElementById("submitForm").addEventListener("submit", (event) => {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            document.getElementById("password_error").classList.remove("hidden");
+            event.preventDefault();
+        }
+
+    })
+</script>
+</html>

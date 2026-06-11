@@ -1,4 +1,4 @@
-package com.gerenciador.front_gestao_vagas.modules.candidate.service;
+package com.gerenciador.front_gestao_vagas.modules.company.service;
 
 import com.gerenciador.front_gestao_vagas.modules.candidate.dto.Token;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,13 +12,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CandidateService {
+public class LoginCompanyService {
 
     @Value("${host.api.gestao_vagas}")
-    private String hostApiGestasoVagas;
+    private String hotApiGestaoVagas;
 
-    public Token login(String username, String password) {
-
+    public Token execute(String username, String password){
         RestTemplate rt = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -30,7 +29,7 @@ public class CandidateService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(data, headers);
 
-        var url = hostApiGestasoVagas.concat("/candidate/auth");
+        var url = hotApiGestaoVagas.concat("/company/auth");
 
         var result = rt.postForObject(url, request, Token.class);
         System.out.println("Retorno do login: ");

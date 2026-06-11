@@ -1,16 +1,19 @@
 package com.gerenciador.front_gestao_vagas.modules.candidate.service;
 
 import com.gerenciador.front_gestao_vagas.modules.candidate.dto.CreateCandidateDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CreateCandidateService {
+
+    @Value("${host.api.gestao_vagas}")
+    private String hostApiGestasoVagas;
+
     public void execute(CreateCandidateDTO candidate){
 
             RestTemplate rt = new RestTemplate();
@@ -20,7 +23,9 @@ public class CreateCandidateService {
 
             HttpEntity<CreateCandidateDTO> request = new HttpEntity<>(candidate, headers);
 
-            var result = rt.postForObject("http://localhost:8080/candidate/", request, String.class);
+        var url = hostApiGestasoVagas.concat("/candidate/");
+
+        var result = rt.postForObject(url, request, String.class);
 
             System.out.println(result);
 

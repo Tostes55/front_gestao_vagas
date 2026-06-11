@@ -4,3 +4,7 @@ spring:
 
 server:
   port: '8082'
+
+host:
+  api:
+    gestao_vagas: http://localhost:8080

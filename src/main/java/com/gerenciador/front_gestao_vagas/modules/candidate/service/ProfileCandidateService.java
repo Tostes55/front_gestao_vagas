@@ -1,6 +1,7 @@
 package com.gerenciador.front_gestao_vagas.modules.candidate.service;
 
 import com.gerenciador.front_gestao_vagas.modules.candidate.dto.ProfileUserDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,10 @@ import java.util.Map;
 
 @Service
 public class ProfileCandidateService {
+
+    @Value("${host.api.gestao_vagas}")
+    private String hostApiGestasoVagas;
+
     public ProfileUserDTO execute(String token) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -20,7 +25,8 @@ public class ProfileCandidateService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
         try {
-            var result = rt.exchange("http://localhost:8080/candidate/", HttpMethod.GET, request, ProfileUserDTO.class);
+            var url = hostApiGestasoVagas.concat("/candidate/");
+            var result = rt.exchange(url, HttpMethod.GET, request, ProfileUserDTO.class);
             System.out.println(result);
             return result.getBody();
         } catch (HttpClientErrorException.Unauthorized ex) {
